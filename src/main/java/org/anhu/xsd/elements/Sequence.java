@@ -15,4 +15,11 @@ public class Sequence {
 		elements.add(element);
 	}
 
+	@Override
+	public String toString() {
+
+		return "Sequence:" + elements;
+
+	}
+
 }

@@ -12,4 +12,11 @@ public class SimpleType {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+
+		return "SimpleType: name = " + name;
+
+	}
+
 }

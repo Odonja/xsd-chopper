@@ -40,4 +40,12 @@ public class XSDFile {
 	}
 	// getter methods for the lists or iterators?
 
+	@Override
+	public String toString() {
+
+		String s = "xsd File: name = " + name + " " + includes + " " + elements + " " + complexities + " "
+				+ simplicities;
+
+		return s.replaceAll("\\[\\]", "");
+	}
 }

@@ -12,4 +12,11 @@ public class Include {
 		return schemaLocation;
 	}
 
+	@Override
+	public String toString() {
+
+		return "Include: schemaLocation = " + schemaLocation;
+
+	}
+
 }

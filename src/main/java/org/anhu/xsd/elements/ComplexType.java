@@ -32,6 +32,23 @@ public class ComplexType {
 		return name;
 	}
 
+	public void setNameFromXMLLine(String xmlLine) {
+		if (xmlLine.contains("name")) {
+			String[] choppedLine = xmlLine.split("\"");
+			name = choppedLine[1];
+		}
+	}
+
+	@Override
+	public String toString() {
+		if (name == null) {
+			return "ComplexType: " + sequences + " " + elements;
+		} else {
+			return "ComplexType: name = " + name + " " + sequences + " " + elements;
+		}
+
+	}
+
 //	@Override
 //	public boolean equals(Object obj) {
 //		if (this == obj) {

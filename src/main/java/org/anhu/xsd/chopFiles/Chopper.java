@@ -1,4 +1,4 @@
-package org.anhu.xsd;
+package org.anhu.xsd.chopFiles;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +22,7 @@ public class Chopper {
 		}
 		File file = new File(filepath);
 		BufferedReader br = new BufferedReader(new FileReader(file));
-		XSDFile xsdFile = new XSDFile(file.getName());
+		XSDFile xsdFile = new XSDFile(file.getName(), filepath);
 		delegator(br, xsdFile);
 		br.close();
 		return xsdFile;

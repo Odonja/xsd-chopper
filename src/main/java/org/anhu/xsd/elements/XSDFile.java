@@ -5,14 +5,16 @@ import java.util.List;
 
 public class XSDFile {
 
-	private String name;
-	private List<Include> includes;
-	private List<CompositeElement> elements;
-	private List<ComplexType> complexities;
-	private List<SimpleType> simplicities;
+	private final String name;
+	private final String location;
+	private final List<Include> includes;
+	private final List<CompositeElement> elements;
+	private final List<ComplexType> complexities;
+	private final List<SimpleType> simplicities;
 
-	public XSDFile(String name) {
+	public XSDFile(String name, String location) {
 		this.name = name;
+		this.location = location;
 		includes = new ArrayList<>();
 		elements = new ArrayList<>();
 		complexities = new ArrayList<>();
@@ -38,7 +40,10 @@ public class XSDFile {
 	public String getName() {
 		return name;
 	}
-	// getter methods for the lists or iterators?
+
+	public String getLocation() {
+		return location;
+	}
 
 	@Override
 	public String toString() {
@@ -47,5 +52,14 @@ public class XSDFile {
 				+ simplicities;
 
 		return s.replaceAll("\\[\\]", "");
+	}
+
+	public boolean isListedInInclude(String file) {
+		for (Include incl : includes) {
+			if (incl.getSchemaLocation().equals(file)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

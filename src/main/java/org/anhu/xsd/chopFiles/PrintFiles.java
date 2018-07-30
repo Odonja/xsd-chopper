@@ -1,4 +1,4 @@
-package org.anhu.xsd.findFiles;
+package org.anhu.xsd.chopFiles;
 
 import static java.nio.file.FileVisitResult.CONTINUE;
 

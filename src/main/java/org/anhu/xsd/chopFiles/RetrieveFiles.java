@@ -1,4 +1,4 @@
-package org.anhu.xsd.findFiles;
+package org.anhu.xsd.chopFiles;
 
 import java.io.IOException;
 import java.nio.file.Files;

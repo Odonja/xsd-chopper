@@ -14,9 +14,7 @@ public class Include {
 
 	@Override
 	public String toString() {
-
 		return "Include: schemaLocation = " + schemaLocation;
-
 	}
 
 }

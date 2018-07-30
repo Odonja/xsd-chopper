@@ -9,7 +9,7 @@ import java.util.List;
 public class RetrieveFiles {
 
 	public static List<Path> findXSDFiles(String dir) {
-		PrintFiles pf = new PrintFiles();
+		SortFiles pf = new SortFiles();
 		try {
 			Files.walkFileTree(Paths.get(dir), pf);
 		} catch (IOException e) {

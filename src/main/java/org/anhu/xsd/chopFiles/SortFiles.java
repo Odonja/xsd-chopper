@@ -10,7 +10,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrintFiles extends SimpleFileVisitor<Path> {
+public class SortFiles extends SimpleFileVisitor<Path> {
 
 	private List<Path> xsdPaths = new ArrayList<>();
 

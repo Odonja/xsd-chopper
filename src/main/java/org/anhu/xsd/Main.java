@@ -11,6 +11,7 @@ public class Main {
 	public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException {
 		Informant sherlock = new Informant();
 		System.out.println(sherlock.reportUnIncludedFiles());
+		System.out.println(sherlock.reportDoubleFiles());
 	}
 
 }

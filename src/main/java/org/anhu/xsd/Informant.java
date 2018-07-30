@@ -49,4 +49,31 @@ public class Informant {
 		return str.toString();
 	}
 
+	public String reportDoubleFiles() {
+		List<XSDFile> doubles = new ArrayList<>();
+		for (XSDFile xsdFile : xsdFiles) {
+			for (XSDFile xsd : xsdFiles) {
+				if (xsdFile.getName().equals(xsd.getName()) && !xsdFile.getLocation().equals(xsd.getLocation())) {
+					if (!doubles.contains(xsdFile)) {
+						doubles.add(xsdFile);
+					}
+					if (!doubles.contains(xsd)) {
+						doubles.add(xsd);
+					}
+				}
+			}
+
+		}
+		StringBuilder str = new StringBuilder();
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		str.append("The following files appear multiple times:\n");
+		for (XSDFile xsdFile : doubles) {
+			str.append(xsdFile.getLocation() + "\n");
+		}
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		return str.toString();
+	}
+
 }

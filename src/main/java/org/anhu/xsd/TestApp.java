@@ -6,9 +6,9 @@ import java.net.URISyntaxException;
 
 public class TestApp {
 
-	public static void main(String args[]) throws UnsupportedEncodingException {
-		System.out.println(("dir=" + getTargetDirectory(TestApp.class)));
-	}
+//	public static void main(String args[]) throws UnsupportedEncodingException {
+//		System.out.println(("dir=" + getTargetDirectory(TestApp.class)));
+//	}
 
 	public final static String getTargetDirectory(final Class<?> cls) throws UnsupportedEncodingException {
 		final String relPath = getDirectoryOfClass(cls);

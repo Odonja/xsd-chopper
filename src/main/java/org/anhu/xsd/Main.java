@@ -10,10 +10,10 @@ import org.anhu.xsd.findFiles.RetrieveFiles;
 import org.xml.sax.SAXException;
 
 public class Main {
-	private static final String STARTDIRECTORY = "C:\\Users\\anneke.huijsmans\\Documents\\xsd_example\\folder";
 
 	public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException {
-		List<Path> files = RetrieveFiles.findXSDFiles(STARTDIRECTORY);
+		String dir = TestApp.getTargetDirectory(Main.class);
+		List<Path> files = RetrieveFiles.findXSDFiles(dir);
 		Chopper chopper = new Chopper();
 		for (Path file : files) {
 			System.out.println(chopper.chopFile(file.toString()));
@@ -38,4 +38,5 @@ public class Main {
 //
 //		}
 	}
+
 }

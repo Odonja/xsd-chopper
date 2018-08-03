@@ -1,7 +1,7 @@
 package org.anhu.xsd;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +14,22 @@ public class Informant {
 
 	private final List<XSDFile> xsdFiles;
 
-	public Informant() throws IllegalArgumentException, FileNotFoundException, IOException {
+	public Informant() throws UnsupportedEncodingException {
 		String dir = TestApp.getTargetDirectory(Informant.class);
 		List<Path> files = RetrieveFiles.findXSDFiles(dir);
 		Chopper chopper = new Chopper();
 		xsdFiles = new ArrayList<>();
 		for (Path file : files) {
-			XSDFile xsdFile = chopper.chopFile(file.toString());
-			xsdFiles.add(xsdFile);
-			System.out.println(xsdFile);
+			XSDFile xsdFile;
+			try {
+				xsdFile = chopper.chopFile(file.toString());
+				xsdFiles.add(xsdFile);
+				System.out.println(xsdFile);
+			} catch (IllegalArgumentException | IOException e) {
+				System.out.println("exception on file: " + file.toString());
+				e.printStackTrace();
+			}
+
 		}
 	}
 

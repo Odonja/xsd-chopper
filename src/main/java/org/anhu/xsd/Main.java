@@ -19,14 +19,9 @@ public class Main {
 		System.out.println(sherlock.reportUnIncludedFiles());
 		System.out.println(sherlock.reportDoubleFiles());
 
-//		System.setProperty(DOMImplementationRegistry.PROPERTY,
-//				"com.sun.org.apache.xerces.internal.dom.DOMXSImplementationSourceImpl");
-//		DOMImplementationRegistry registry = DOMImplementationRegistry.newInstance();
-//		com.sun.org.apache.xerces.internal.impl.xs.XSImplementationImpl impl = (com.sun.org.apache.xerces.internal.impl.xs.XSImplementationImpl) registry
-//				.getDOMImplementation("XS-Loader");
-//		com.sun.org.apache.xerces.internal.xs.XSLoader schemaLoader = impl.createXSLoader(null);
-//		com.sun.org.apache.xerces.internal.xs.XSModel model = schemaLoader.loadURI(
-//				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\CommonDataTypesSchema.xsd");
+		String test = "     some    words  in       a line  ";
+		test = test.trim().replaceAll("\\s+", " ");
+		System.out.println(test);
 	}
 
 }

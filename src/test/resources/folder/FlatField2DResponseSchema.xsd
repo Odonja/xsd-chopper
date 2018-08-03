@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	  <xs:include schemaLocation="CommonDataTypesSchema.xsd" /> 
+
+    <xs:element name="FlatField2DResponse">
+        <xs:annotation>
+            <xs:documentation>
+                Response of the FlatField measurement.                
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:sequence>                                
+                <xs:element name="ParamsWritten" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+                <xs:element name="Barcode" type="BarcodeType" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

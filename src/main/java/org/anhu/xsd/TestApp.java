@@ -8,10 +8,6 @@ import java.nio.file.Files;
 
 public class TestApp {
 
-	// public static void main(String args[]) throws UnsupportedEncodingException {
-	// System.out.println(("dir=" + getTargetDirectory(TestApp.class)));
-	// }
-
 	public final static String getTargetDirectory(final Class<?> cls) throws UnsupportedEncodingException {
 		final String relPath = getDirectoryOfClass(cls);
 		// return a path with a collapsed filename (i.e. without /..).

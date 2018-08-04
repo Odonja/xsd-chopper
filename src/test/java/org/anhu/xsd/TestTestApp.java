@@ -12,7 +12,6 @@ public class TestTestApp {
 		try {
 			System.out.println(TestApp.getAsString(location));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -13,9 +13,7 @@ public class Informant {
 
 	private final List<XSDFile> xsdFiles;
 
-	public Informant() throws UnsupportedEncodingException {
-		String dir = TestApp.getTargetDirectory(Informant.class);
-		dir = dir + "\\xsd_example";
+	public Informant(String dir) throws UnsupportedEncodingException {
 		List<Path> files = RetrieveFiles.findXSDFiles(dir);
 		Chopper chopper = new Chopper();
 		xsdFiles = new ArrayList<>();
@@ -23,7 +21,6 @@ public class Informant {
 			try {
 				XSDFile xsdFile = chopper.chopFile(file.toString());
 				xsdFiles.add(xsdFile);
-				// System.out.println(xsdFile);
 			} catch (IllegalArgumentException e) {
 				System.out.println("exception on file: " + file.toString());
 				e.printStackTrace();

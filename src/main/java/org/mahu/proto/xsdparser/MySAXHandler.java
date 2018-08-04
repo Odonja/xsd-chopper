@@ -52,22 +52,18 @@ public class MySAXHandler implements ContentHandler {
 		Element element = determineElementType(localName);
 
 		if (element != null) {
-			// System.out.println("MySAXHandler: Starting element=" + localName + "
-			// qualifiedName=" + qualifiedName);
 			processElement(attrs, element);
 		} else if (localName.toLowerCase().equals("include")) {
 			Include include = new Include(attrs.getValue(0));
 			file.addInclude(include);
 		} else if (!localName.toLowerCase().equals("schema")) {
-			// System.out.println("Unprocessed element!!!!!!!!!!! MySAXHandler: Starting
-			// element=" + localName
-			// + " qualifiedName=" + qualifiedName);
+			System.out.println("Unprocessed element!!!!!!!!!!! MySAXHandler: Starting element=" + localName
+					+ " qualifiedName=" + qualifiedName);
 		}
 	}
 
 	private void processElement(Attributes attrs, Element element) {
 		for (int i = 0; i < attrs.getLength(); i++) {
-			// System.out.println(" " + attrs.getQName(i) + "=" + attrs.getValue(i));
 			if (attrs.getQName(i).equals("name")) {
 				element.setName(attrs.getValue(i));
 			} else if (attrs.getQName(i).equals("type")) {
@@ -99,8 +95,6 @@ public class MySAXHandler implements ContentHandler {
 
 	@Override
 	public void endElement(String namespaceURI, String localName, String qualifiedName) throws SAXException {
-		// System.out.println("MySAXHandler: Ending element=" + localName + "
-		// qualifiedName=" + qualifiedName);
 		if (localName.toLowerCase().equals("element") || localName.toLowerCase().equals("sequence")
 				|| localName.toLowerCase().equals("complextype") || localName.toLowerCase().equals("simpletype")) {
 			inProgress.pop();
@@ -109,9 +103,7 @@ public class MySAXHandler implements ContentHandler {
 
 	@Override
 	public void characters(char[] text, int start, int length) throws SAXException {
-		// For XSD all useful information is in the attributes (what I have seen sofar).
-		// String data = new String(text);
-		// System.out.println(data.substring(start, start + length));
+		// empty
 	}
 
 	@Override

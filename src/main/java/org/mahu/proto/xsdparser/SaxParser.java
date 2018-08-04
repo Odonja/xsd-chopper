@@ -20,6 +20,7 @@ public class SaxParser {
 		XMLReader parser;
 		MySAXHandler msh;
 		CustomResolver myResolver = new CustomResolver();
+		System.out.println("Processing xsd=" + file.getLocation());
 		try {
 			parser = XMLReaderFactory.createXMLReader();
 			msh = new MySAXHandler(file);

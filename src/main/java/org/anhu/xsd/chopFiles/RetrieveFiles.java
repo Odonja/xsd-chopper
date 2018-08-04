@@ -13,7 +13,6 @@ public class RetrieveFiles {
 		try {
 			Files.walkFileTree(Paths.get(dir), pf);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return pf.retrieveAllXsdFiles();

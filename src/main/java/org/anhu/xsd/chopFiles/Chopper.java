@@ -15,7 +15,7 @@ public class Chopper {
 
 		int start = location.lastIndexOf("\\") + 1;
 		String name = location.substring(start);
-		System.out.println(name);
+		// System.out.println(name);
 		XSDFile xsd = null;
 
 		try {

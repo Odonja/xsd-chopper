@@ -8,33 +8,22 @@ public class XSDFile {
 	private final String name;
 	private final String location;
 	private final List<Include> includes;
-	private final List<CompositeElement> elements;
-	private final List<ComplexType> complexities;
-	private final List<SimpleType> simplicities;
+	private final List<Element> elements;
 
 	public XSDFile(String name, String location) {
 		this.name = name;
 		this.location = location;
 		includes = new ArrayList<>();
 		elements = new ArrayList<>();
-		complexities = new ArrayList<>();
-		simplicities = new ArrayList<>();
+
 	}
 
 	public void addInclude(Include include) {
 		includes.add(include);
 	}
 
-	public void addElement(CompositeElement element) {
+	public void addElement(Element element) {
 		elements.add(element);
-	}
-
-	public void addComplexType(ComplexType type) {
-		complexities.add(type);
-	}
-
-	public void addSimpleType(SimpleType type) {
-		simplicities.add(type);
 	}
 
 	public String getName() {
@@ -48,10 +37,9 @@ public class XSDFile {
 	@Override
 	public String toString() {
 
-		String s = "xsd File: name = " + name + " " + includes + " " + elements + " " + complexities + " "
-				+ simplicities;
-
-		return s.replaceAll("\\[\\]", "");
+		String s = "xsd File: name = " + name + " " + includes + " " + elements;
+		s = s.replaceAll("\\[\\]", "").trim().replaceAll("\\s+", " ");
+		return s;
 	}
 
 	public boolean isListedInInclude(String file) {

@@ -4,16 +4,24 @@ import java.io.IOException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.anhu.xsd.Informant;
+import org.anhu.xsd.TestApp;
+import org.anhu.xsd.elements.XSDFile;
 import org.junit.Test;
-import org.mahu.proto.xsdparser.SaxParser;
 import org.xml.sax.SAXException;
 
 public class SaxTest {
 
 	@Test
 	public void test() throws SAXException, ParserConfigurationException, IOException {
-		String xmlSource = GetResource.getAsString("ColorProfileSchema.xsd");
-		SaxParser.parse(xmlSource);
+		String fileName = "ColorProfileSchema.xsd";
+		String xmlSource = GetResource.getAsString(fileName);
+
+		String location = TestApp.getTargetDirectory(Informant.class) + "\\" + fileName;
+
+		XSDFile xsd = new XSDFile(fileName, location);
+		SaxParser.parse(xmlSource, xsd);
+		System.out.println(xsd + "\n" + xsd.getLocation());
 	}
 
 }

@@ -1,11 +1,24 @@
 package org.mahu.proto.xsdparser;
 
+import java.util.Stack;
+
+import org.anhu.xsd.elements.Element;
+import org.anhu.xsd.elements.Include;
+import org.anhu.xsd.elements.XSDFile;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
 public class MySAXHandler implements ContentHandler {
+
+	private final XSDFile file;
+	private final Stack<Element> inProgress;
+
+	public MySAXHandler(XSDFile file) {
+		this.file = file;
+		inProgress = new Stack<>();
+	}
 
 	@Override
 	public void setDocumentLocator(Locator locator) {
@@ -35,15 +48,63 @@ public class MySAXHandler implements ContentHandler {
 	@Override
 	public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes attrs)
 			throws SAXException {
-		System.out.println("MySAXHandler: Starting element=" + localName + " qualifiedName=" + qualifiedName);
-		for (int i = 0; i < attrs.getLength(); i++) {
-			System.out.println("  " + attrs.getQName(i) + "=" + attrs.getValue(i));
+
+		Element element = determineElementType(localName);
+
+		if (element != null) {
+			// System.out.println("MySAXHandler: Starting element=" + localName + "
+			// qualifiedName=" + qualifiedName);
+			processElement(attrs, element);
+		} else if (localName.toLowerCase().equals("include")) {
+			Include include = new Include(attrs.getValue(0));
+			file.addInclude(include);
+		} else if (!localName.toLowerCase().equals("schema")) {
+			// System.out.println("Unprocessed element!!!!!!!!!!! MySAXHandler: Starting
+			// element=" + localName
+			// + " qualifiedName=" + qualifiedName);
 		}
+	}
+
+	private void processElement(Attributes attrs, Element element) {
+		for (int i = 0; i < attrs.getLength(); i++) {
+			// System.out.println(" " + attrs.getQName(i) + "=" + attrs.getValue(i));
+			if (attrs.getQName(i).equals("name")) {
+				element.setName(attrs.getValue(i));
+			} else if (attrs.getQName(i).equals("type")) {
+				element.setType(attrs.getValue(i));
+			}
+		}
+		if (inProgress.isEmpty()) {
+			file.addElement(element);
+			inProgress.push(element);
+		} else {
+			inProgress.peek().addElement(element);
+			inProgress.push(element);
+		}
+	}
+
+	private Element determineElementType(String localName) {
+		switch (localName.toLowerCase()) {
+		case "element":
+			return new Element(Element.elementType.ELEMENT);
+		case "sequence":
+			return new Element(Element.elementType.SEQUENCE);
+		case "complextype":
+			return new Element(Element.elementType.COMPLEXTYPE);
+		case "simpletype":
+			return new Element(Element.elementType.SIMPLETYPE);
+		}
+		return null;
 	}
 
 	@Override
 	public void endElement(String namespaceURI, String localName, String qualifiedName) throws SAXException {
-		System.out.println("MySAXHandler: Ending element=" + localName + " qualifiedName=" + qualifiedName);
+		// System.out.println("MySAXHandler: Ending element=" + localName + "
+		// qualifiedName=" + qualifiedName);
+		if (localName.toLowerCase().equals("element") || localName.toLowerCase().equals("sequence")
+				|| localName.toLowerCase().equals("complextype") || localName.toLowerCase().equals("simpletype")) {
+			inProgress.pop();
+		}
 	}
 
 	@Override

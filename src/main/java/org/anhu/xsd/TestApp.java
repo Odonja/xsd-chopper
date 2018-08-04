@@ -1,14 +1,16 @@
 package org.anhu.xsd;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 public class TestApp {
 
-//	public static void main(String args[]) throws UnsupportedEncodingException {
-//		System.out.println(("dir=" + getTargetDirectory(TestApp.class)));
-//	}
+	// public static void main(String args[]) throws UnsupportedEncodingException {
+	// System.out.println(("dir=" + getTargetDirectory(TestApp.class)));
+	// }
 
 	public final static String getTargetDirectory(final Class<?> cls) throws UnsupportedEncodingException {
 		final String relPath = getDirectoryOfClass(cls);
@@ -23,6 +25,11 @@ public class TestApp {
 		} catch (final URISyntaxException e) {
 			throw new RuntimeException("Failed to retrieve path for class " + cls.getName(), e);
 		}
+	}
+
+	public static String getAsString(final String location) throws IOException {
+		File file = new File(location);
+		return new String(Files.readAllBytes(file.toPath()), "UTF-8");
 	}
 
 }

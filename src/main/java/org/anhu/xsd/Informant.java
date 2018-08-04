@@ -1,6 +1,5 @@
 package org.anhu.xsd;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,16 +15,16 @@ public class Informant {
 
 	public Informant() throws UnsupportedEncodingException {
 		String dir = TestApp.getTargetDirectory(Informant.class);
+		dir = dir + "\\xsd_example";
 		List<Path> files = RetrieveFiles.findXSDFiles(dir);
 		Chopper chopper = new Chopper();
 		xsdFiles = new ArrayList<>();
 		for (Path file : files) {
-			XSDFile xsdFile;
 			try {
-				xsdFile = chopper.chopFile(file.toString());
+				XSDFile xsdFile = chopper.chopFile(file.toString());
 				xsdFiles.add(xsdFile);
-				System.out.println(xsdFile);
-			} catch (IllegalArgumentException | IOException e) {
+				// System.out.println(xsdFile);
+			} catch (IllegalArgumentException e) {
 				System.out.println("exception on file: " + file.toString());
 				e.printStackTrace();
 			}

@@ -131,6 +131,22 @@ public class Informant {
 		return str.toString();
 	}
 
+	public String reportAllElementsWithFile() {
+		StringBuilder str = new StringBuilder();
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		str.append("Elements with their file:\n");
+
+		for (XSDFile xsdFile : xsdFiles) {
+			xsdFile.appendAllElements(str);
+			str.append("\n");
+		}
+
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		return str.toString();
+	}
+
 	private boolean searchForUse(XSDFile xsdFile, Element type) {
 		boolean isUsed;
 		isUsed = xsdFile.usesType(type.getName());

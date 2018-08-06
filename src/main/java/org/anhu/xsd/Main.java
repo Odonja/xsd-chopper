@@ -19,6 +19,7 @@ public class Main {
 		System.out.println(sherlock.reportDoubleFiles());
 		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
 		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
+		System.out.println(sherlock.reportAllElementsWithFile());
 	}
 
 }

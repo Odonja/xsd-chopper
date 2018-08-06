@@ -95,4 +95,12 @@ public class XSDFile {
 		}
 		return false;
 	}
+
+	public void appendAllElements(StringBuilder str) {
+		if (elements != null) {
+			for (Element element : elements) {
+				element.appendAllElements(location, str);
+			}
+		}
+	}
 }

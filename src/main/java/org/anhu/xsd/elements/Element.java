@@ -74,6 +74,15 @@ public class Element {
 		return types;
 	}
 
+	public void appendAllElements(String fileName, StringBuilder str) {
+		str.append(etype + " " + name + " in file " + fileName + "\n");
+		if (elements != null) {
+			for (Element element : elements) {
+				element.appendAllElements(fileName, str);
+			}
+		}
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

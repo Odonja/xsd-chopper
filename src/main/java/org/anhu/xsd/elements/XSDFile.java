@@ -81,6 +81,12 @@ public class XSDFile {
 		return s;
 	}
 
+	public String identifier() {
+		String s = includes + " " + elements;
+		s = s.replaceAll("\\[\\]", "").trim().replaceAll("\\s+", " ");
+		return s;
+	}
+
 	public boolean isListedInInclude(String file) {
 		for (Include incl : includes) {
 			if (incl.getSchemaLocation().equals(file)) {

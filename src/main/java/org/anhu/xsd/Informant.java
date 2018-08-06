@@ -105,6 +105,32 @@ public class Informant {
 
 	}
 
+	public String reportFilesWithIdenticalInhoud() {
+		StringBuilder str = new StringBuilder();
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		str.append("The following files have identical inhoud:\n");
+
+		for (XSDFile xsdFile : xsdFiles) {
+			String inhoud = xsdFile.identifier();
+			boolean startFound = false;
+			for (XSDFile xsd : xsdFiles) {
+				if (startFound) {
+					if (inhoud.equals(xsd.identifier())) {
+						str.append(xsdFile.getLocation() + "   and    " + xsd.getLocation() + "\n");
+					}
+				} else if (xsd == xsdFile) {
+					startFound = true;
+				}
+			}
+
+		}
+
+		str.append(
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		return str.toString();
+	}
+
 	private boolean searchForUse(XSDFile xsdFile, Element type) {
 		boolean isUsed;
 		isUsed = xsdFile.usesType(type.getName());

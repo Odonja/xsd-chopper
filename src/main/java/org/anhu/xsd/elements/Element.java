@@ -45,6 +45,35 @@ public class Element {
 		elements.add(element);
 	}
 
+	public boolean usesType(String someType) {
+		if (type != null && type.equals(someType)) {
+			return true;
+		}
+		if (elements != null) {
+			for (Element element : elements) {
+				if (element.usesType(someType)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public List<Element> getSimpleAndComplexTypes() {
+		List<Element> types = new ArrayList<>();
+		if (elements != null) {
+			for (Element element : elements) {
+				elementType et = element.getElementtype();
+				if (et == elementType.COMPLEXTYPE || et == elementType.SIMPLETYPE) {
+					types.add(element);
+					types.addAll(element.getSimpleAndComplexTypes());
+
+				}
+			}
+		}
+		return types;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder str = new StringBuilder();

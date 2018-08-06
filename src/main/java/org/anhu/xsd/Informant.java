@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.anhu.xsd.chopFiles.Chopper;
 import org.anhu.xsd.chopFiles.RetrieveFiles;
+import org.anhu.xsd.elements.Element;
 import org.anhu.xsd.elements.XSDFile;
 
 public class Informant {
@@ -43,12 +44,12 @@ public class Informant {
 					break;
 				}
 			}
-			if (notIncluded) {
+			if (notIncluded && xsdFile.hasNoElement()) {
 				str.append(xsdFile.getLocation() + "\n");
 			}
 		}
 		str.append(
-				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		return str.toString();
 	}
 
@@ -75,8 +76,47 @@ public class Informant {
 			str.append(xsdFile.getLocation() + "\n");
 		}
 		str.append(
-				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		return str.toString();
+	}
+
+	public String reportUnusedSimpleAndComplexTypes() {
+		StringBuilder str = new StringBuilder();
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		str.append("The following simple and complex types are not used in any file:\n");
+
+		for (XSDFile xsdFile : xsdFiles) {
+			List<Element> types = xsdFile.getSimpleAndComplexTypes();
+			for (Element type : types) {
+				boolean isUsed = false;
+				if (type.getName() != null) {
+					isUsed = searchForUse(xsdFile, type);
+					if (!isUsed) {
+						str.append("Unused " + type.getElementtype() + " " + type.getName() + " in file: "
+								+ xsdFile.getLocation() + "\n");
+					}
+				}
+			}
+		}
+		str.append(
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		return str.toString();
+
+	}
+
+	private boolean searchForUse(XSDFile xsdFile, Element type) {
+		boolean isUsed;
+		isUsed = xsdFile.usesType(type.getName());
+		if (!isUsed) {
+			for (XSDFile xsd : xsdFiles) {
+				if (xsd.usesType(type.getName())) {
+					isUsed = true;
+					break;
+				}
+			}
+		}
+		return isUsed;
 	}
 
 }

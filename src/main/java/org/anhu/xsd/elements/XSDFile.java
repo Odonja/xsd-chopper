@@ -3,6 +3,8 @@ package org.anhu.xsd.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anhu.xsd.elements.Element.elementType;
+
 public class XSDFile {
 
 	private final String name;
@@ -32,6 +34,43 @@ public class XSDFile {
 
 	public String getLocation() {
 		return location;
+	}
+
+	public boolean hasNoElement() {
+		boolean hasNoElement = true;
+		for (Element element : elements) {
+			if (element.getElementtype() == Element.elementType.ELEMENT) {
+				hasNoElement = false;
+				break;
+			}
+		}
+		return hasNoElement;
+	}
+
+	public List<Element> getSimpleAndComplexTypes() {
+		List<Element> types = new ArrayList<>();
+		if (elements != null) {
+			for (Element element : elements) {
+				elementType et = element.getElementtype();
+				if (et == elementType.COMPLEXTYPE || et == elementType.SIMPLETYPE) {
+					types.add(element);
+
+				}
+				types.addAll(element.getSimpleAndComplexTypes());
+			}
+		}
+		return types;
+	}
+
+	public boolean usesType(String someType) {
+		if (elements != null) {
+			for (Element element : elements) {
+				if (element.usesType(someType)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override

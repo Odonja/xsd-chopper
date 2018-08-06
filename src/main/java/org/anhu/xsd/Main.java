@@ -10,12 +10,14 @@ public class Main {
 
 	public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException,
 			ClassNotFoundException, InstantiationException, IllegalAccessException, ClassCastException {
-		final String dir2 = "C:\\Users\\310160231\\Documents\\dps-css\\trunk\\software\\shared\\xsd";
-		final String dir1 = "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
+//		final String dir = "C:\\Users\\310160231\\Documents\\dps-css\\trunk\\software\\shared\\xsd";
+//		final String dir = "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
+		final String dir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example";
 
-		Informant sherlock = new Informant(dir1);
+		Informant sherlock = new Informant(dir);
 		System.out.println(sherlock.reportUnIncludedFiles());
 		System.out.println(sherlock.reportDoubleFiles());
+		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
 	}
 
 }

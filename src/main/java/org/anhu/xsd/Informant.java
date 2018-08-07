@@ -1,7 +1,14 @@
 package org.anhu.xsd;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +22,41 @@ public class Informant {
 	private final List<XSDFile> xsdFiles;
 
 	public Informant(String dir) throws UnsupportedEncodingException {
-		List<Path> files = RetrieveFiles.findXSDFiles(dir);
-		Chopper chopper = new Chopper();
 		xsdFiles = new ArrayList<>();
+		List<Path> files = RetrieveFiles.findXSDFiles(dir);
+		chopFiles(files);
+	}
+
+	public Informant(String dir, String thefile) {
+		xsdFiles = new ArrayList<>();
+		List<Path> files = readFilesFromFile(dir, thefile);
+		chopFiles(files);
+	}
+
+	private List<Path> readFilesFromFile(String dir, String thefile) {
+		List<Path> files = new ArrayList<>();
+		String fileLocation = dir + "\\" + thefile;
+		File file = new File(fileLocation);
+
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(file));
+			while ((fileLocation = br.readLine()) != null) {
+				files.add(Paths.get(dir + "\\" + fileLocation));
+			}
+			br.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("Informant constructor, file: " + fileLocation + " was not found.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return files;
+	}
+
+	private void chopFiles(List<Path> files) {
+		Chopper chopper = new Chopper();
 		for (Path file : files) {
 			try {
 				XSDFile xsdFile = chopper.chopFile(file.toString());
@@ -159,6 +198,30 @@ public class Informant {
 			}
 		}
 		return isUsed;
+	}
+
+	public void reportAndPrintAllFilesWithTopLevelElement() {
+
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter("FilesWithATopLevelElement.txt");
+			StringBuilder str = new StringBuilder();
+			writer.println(
+					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			writer.println("Files that have a top level element:");
+
+			for (XSDFile xsdFile : xsdFiles) {
+				if (xsdFile.hasTopLevelElement()) {
+					writer.println(xsdFile.getLocation());
+				}
+			}
+			writer.println(
+					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

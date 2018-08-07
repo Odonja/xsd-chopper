@@ -103,4 +103,13 @@ public class XSDFile {
 			}
 		}
 	}
+
+	public boolean hasTopLevelElement() {
+		for (Element element : elements) {
+			if (element.getElementtype() == Element.elementType.ELEMENT) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

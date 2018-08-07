@@ -11,7 +11,7 @@ public class Element {
 	private final elementType etype;
 
 	public enum elementType {
-		ELEMENT, SEQUENCE, SIMPLETYPE, COMPLEXTYPE;
+		ELEMENT, SEQUENCE, SIMPLETYPE, COMPLEXTYPE, CHOICE, ATTRIBUTE;
 	}
 
 	public Element(elementType etype) {

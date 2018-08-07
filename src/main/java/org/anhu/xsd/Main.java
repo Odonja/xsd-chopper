@@ -26,7 +26,9 @@ public class Main {
 		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
 		System.out.println(sherlock.reportAllElementsWithFile());
 
-		sherlock.reportAndPrintAllFilesWithTopLevelElement();
+		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String file = "FilesWithATopLevelElement.txt";
+		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
 
 	}
 

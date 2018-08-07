@@ -200,19 +200,20 @@ public class Informant {
 		return isUsed;
 	}
 
-	public void reportAndPrintAllFilesWithTopLevelElement() {
-
+	public void reportAndPrintAllFilesWithTopLevelElement(String directory, String fileName) {
+		String filelocation = directory + "\\" + fileName;
+		File file = new File(filelocation);
 		PrintWriter writer;
 		try {
-			writer = new PrintWriter("FilesWithATopLevelElement.txt");
-			StringBuilder str = new StringBuilder();
+			writer = new PrintWriter(file);
 			writer.println(
 					"--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 			writer.println("Files that have a top level element:");
 
 			for (XSDFile xsdFile : xsdFiles) {
 				if (xsdFile.hasTopLevelElement()) {
-					writer.println(xsdFile.getLocation());
+					String location = xsdFile.getLocation().substring(directory.length() + 1);
+					writer.println(location);
 				}
 			}
 			writer.println(

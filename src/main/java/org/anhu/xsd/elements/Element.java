@@ -1,5 +1,6 @@
 package org.anhu.xsd.elements;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +113,27 @@ public class Element {
 		}
 
 		return str.toString();
+	}
+
+	public void writeYourselfToFile(String tabString, PrintWriter writer) {
+
+		StringBuilder str = new StringBuilder();
+		str.append(tabString + etype + ":");
+		if (name != null) {
+			str.append(" name = " + name);
+		}
+		if (type != null) {
+			str.append(" type = " + type);
+		}
+		if (base != null) {
+			str.append(" base = " + base);
+		}
+		writer.println(tabString + str.toString());
+		if (elements != null) {
+			for (Element element : elements) {
+				element.writeYourselfToFile(tabString + "\t", writer);
+			}
+		}
 	}
 
 }

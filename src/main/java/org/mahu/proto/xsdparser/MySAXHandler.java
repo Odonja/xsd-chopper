@@ -134,7 +134,8 @@ public class MySAXHandler implements ContentHandler {
 			if (lcLocalName.equals("element") || lcLocalName.equals("sequence") || lcLocalName.equals("complextype")
 					|| lcLocalName.equals("simpletype") || lcLocalName.equals("choice")
 					|| lcLocalName.equals("complexcontent") || lcLocalName.equals("simplecontent")
-					|| lcLocalName.equals("extension") || lcLocalName.equals("group")) {
+					|| lcLocalName.equals("extension") || lcLocalName.equals("group")
+					|| lcLocalName.equals("attribute")) {
 				inProgress.pop();
 			}
 			if (localName.toLowerCase().equals("simpletype")) {

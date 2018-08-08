@@ -1,5 +1,6 @@
 package org.anhu.xsd.elements;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,5 +113,19 @@ public class XSDFile {
 			}
 		}
 		return false;
+	}
+
+	public void writeYourselfToFile(PrintWriter writer) {
+		for (Element element : elements) {
+			element.writeYourselfToFile("", writer);
+		}
+	}
+
+	public List<String> getIncludeNames() {
+		List<String> incs = new ArrayList<>();
+		for (Include i : includes) {
+			incs.add(i.getSchemaLocation());
+		}
+		return incs;
 	}
 }

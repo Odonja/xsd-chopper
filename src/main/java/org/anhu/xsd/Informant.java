@@ -225,4 +225,59 @@ public class Informant {
 
 	}
 
+	public void reportSingleXSDToFile(String fileName) {
+		XSDFile xsdFile = fileNameToObject(fileName);
+		if (xsdFile == null) {
+			throw new IllegalArgumentException("reportSingleXSDToFile: file not in memory " + fileName);
+		}
+		String dir = "";
+		try {
+			dir = TestApp.getTargetDirectory(Informant.class);
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		String outputFile = dir + "\\singleFileReport.txt";
+		File file = new File(outputFile);
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(file);
+			writer.println("---start---");
+			recursiveWriteFiles(fileName, writer);
+			writer.println("---end---");
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void recursiveWriteFiles(String fileName, PrintWriter writer) {
+		XSDFile xsdFile = fileNameToObject(fileName);
+		if (xsdFile == null) {
+			writer.println(fileName + " is not present in informant memory -> skipping");
+		}
+		writeSingleFile(xsdFile, writer);
+		List<String> includes = xsdFile.getIncludeNames();
+		for (String i : includes) {
+			recursiveWriteFiles(i, writer);
+		}
+
+	}
+
+	private void writeSingleFile(XSDFile xsd, PrintWriter writer) {
+		writer.println(xsd.getName());
+		writer.println("");
+		xsd.writeYourselfToFile(writer);
+		writer.println("");
+	}
+
+	private XSDFile fileNameToObject(String fileName) {
+		for (XSDFile xsdFile : xsdFiles) {
+			if (xsdFile.getName().equals(fileName)) {
+				return xsdFile;
+			}
+		}
+		return null;
+	}
+
 }

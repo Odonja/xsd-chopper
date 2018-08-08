@@ -88,6 +88,7 @@ public class XSDFile {
 	}
 
 	public boolean isListedInInclude(String file) {
+
 		for (Include incl : includes) {
 			if (incl.getSchemaLocation().equals(file)) {
 				return true;

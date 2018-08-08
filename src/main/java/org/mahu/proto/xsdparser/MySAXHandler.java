@@ -76,10 +76,13 @@ public class MySAXHandler implements ContentHandler {
 
 	private void processElement(Attributes attrs, Element element) {
 		for (int i = 0; i < attrs.getLength(); i++) {
-			if (attrs.getQName(i).equals("name")) {
+			String qName = attrs.getQName(i);
+			if (qName.equals("name")) {
 				element.setName(attrs.getValue(i));
-			} else if (attrs.getQName(i).equals("type")) {
+			} else if (qName.equals("type")) {
 				element.setType(attrs.getValue(i));
+			} else if (qName.equals("base")) {
+				element.setBase(attrs.getValue(i));
 			}
 		}
 		if (inProgress.isEmpty()) {
@@ -104,6 +107,14 @@ public class MySAXHandler implements ContentHandler {
 			return new Element(Element.elementType.SIMPLETYPE);
 		case "choice":
 			return new Element(Element.elementType.CHOICE);
+		case "complexcontent":
+			return new Element(Element.elementType.COMPLEXCONTENT);
+		case "simplecontent":
+			return new Element(Element.elementType.SIMPLECONTENT);
+		case "extension":
+			return new Element(Element.elementType.EXTENSION);
+		case "group":
+			return new Element(Element.elementType.GROUP);
 		case "attribute":
 			if (attrs.getValue("type") != null) {
 				return new Element(Element.elementType.ATTRIBUTE);
@@ -119,9 +130,11 @@ public class MySAXHandler implements ContentHandler {
 	@Override
 	public void endElement(String namespaceURI, String localName, String qualifiedName) throws SAXException {
 		if (uniqueNotStarted && uselessAttributeNotStarted) {
-			if (localName.toLowerCase().equals("element") || localName.toLowerCase().equals("sequence")
-					|| localName.toLowerCase().equals("complextype") || localName.toLowerCase().equals("simpletype")
-					|| localName.toLowerCase().equals("choice")) {
+			String lcLocalName = localName.toLowerCase();
+			if (lcLocalName.equals("element") || lcLocalName.equals("sequence") || lcLocalName.equals("complextype")
+					|| lcLocalName.equals("simpletype") || lcLocalName.equals("choice")
+					|| lcLocalName.equals("complexcontent") || lcLocalName.equals("simplecontent")
+					|| lcLocalName.equals("extension") || lcLocalName.equals("group")) {
 				inProgress.pop();
 			}
 			if (localName.toLowerCase().equals("simpletype")) {

@@ -7,15 +7,24 @@ public class Element {
 
 	private String name;
 	private String type;
+	private String base;
 	private List<Element> elements;
 	private final elementType etype;
 
 	public enum elementType {
-		ELEMENT, SEQUENCE, SIMPLETYPE, COMPLEXTYPE, CHOICE, ATTRIBUTE;
+		ELEMENT, SEQUENCE, SIMPLETYPE, COMPLEXTYPE, CHOICE, ATTRIBUTE, COMPLEXCONTENT, SIMPLECONTENT, EXTENSION, GROUP;
 	}
 
 	public Element(elementType etype) {
 		this.etype = etype;
+	}
+
+	public void setBase(String base) {
+		this.base = base;
+	}
+
+	public String getBase() {
+		return base;
 	}
 
 	public String getType() {
@@ -49,6 +58,9 @@ public class Element {
 		if (type != null && type.equals(someType)) {
 			return true;
 		}
+		if (base != null && base.equals(someType)) {
+			return true;
+		}
 		if (elements != null) {
 			for (Element element : elements) {
 				if (element.usesType(someType)) {
@@ -67,7 +79,6 @@ public class Element {
 				if (et == elementType.COMPLEXTYPE || et == elementType.SIMPLETYPE) {
 					types.add(element);
 					types.addAll(element.getSimpleAndComplexTypes());
-
 				}
 			}
 		}
@@ -92,6 +103,9 @@ public class Element {
 		}
 		if (type != null) {
 			str.append(" type = " + type);
+		}
+		if (base != null) {
+			str.append(" base = " + base);
 		}
 		if (elements != null) {
 			str.append(elements);

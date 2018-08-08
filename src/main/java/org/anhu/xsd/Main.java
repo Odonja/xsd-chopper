@@ -33,12 +33,6 @@ public class Main {
 		final String fileName = "BlaListSchema.xsd";
 		sherlock.reportSingleXSDToFile(fileName);
 
-//		String filelocation = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\example_article.tex";
-//		File f = new File(filelocation);
-//		PrintWriter writer = new PrintWriter(f);
-//		writer.println("some text");
-//		writer.close();
-
 	}
 
 }

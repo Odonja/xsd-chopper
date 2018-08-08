@@ -1,6 +1,10 @@
 package org.anhu.xsd;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -14,6 +18,15 @@ public class TestTestApp {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void test2() {
+		String a = "a";
+		List<String> list = new ArrayList<>();
+		list.add(a);
+		String b = "a";
+		assertTrue(list.contains(b));
 	}
 
 }

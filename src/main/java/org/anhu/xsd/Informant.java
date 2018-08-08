@@ -226,8 +226,7 @@ public class Informant {
 	}
 
 	public void reportSingleXSDToFile(String fileName) {
-		XSDFile xsdFile = fileNameToObject(fileName);
-		if (xsdFile == null) {
+		if (fileNameToObject(fileName) == null) {
 			throw new IllegalArgumentException("reportSingleXSDToFile: file not in memory " + fileName);
 		}
 		String dir = "";
@@ -242,7 +241,7 @@ public class Informant {
 		try {
 			writer = new PrintWriter(file);
 			writer.println("---start---");
-			recursiveWriteFiles(fileName, writer);
+			writeFileWithIncludesToFile(fileName, writer);
 			writer.println("---end---");
 			writer.close();
 		} catch (FileNotFoundException e) {
@@ -251,15 +250,26 @@ public class Informant {
 
 	}
 
-	private void recursiveWriteFiles(String fileName, PrintWriter writer) {
-		XSDFile xsdFile = fileNameToObject(fileName);
-		if (xsdFile == null) {
-			writer.println(fileName + " is not present in informant memory -> skipping");
-		}
-		writeSingleFile(xsdFile, writer);
-		List<String> includes = xsdFile.getIncludeNames();
-		for (String i : includes) {
-			recursiveWriteFiles(i, writer);
+	private void writeFileWithIncludesToFile(String fileName, PrintWriter writer) {
+		List<String> todo = new ArrayList<>();
+		List<String> done = new ArrayList<>();// to prevent looping
+		todo.add(fileName);
+
+		while (!todo.isEmpty()) {
+			String currentFile = todo.get(0);
+			todo.remove(0);
+			done.add(currentFile);
+			XSDFile xsdFile = fileNameToObject(currentFile);
+			if (xsdFile == null) {
+				writer.println(fileName + " is not present in informant memory -> skipping");
+			}
+			writeSingleFile(xsdFile, writer);
+			List<String> includes = xsdFile.getIncludeNames();
+			for (String i : includes) {
+				if (!done.contains(i)) {
+					todo.add(i);
+				}
+			}
 		}
 
 	}

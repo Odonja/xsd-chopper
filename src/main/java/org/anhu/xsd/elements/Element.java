@@ -131,7 +131,7 @@ public class Element {
 		writer.println(tabString + str.toString());
 		if (elements != null) {
 			for (Element element : elements) {
-				element.writeYourselfToFile(tabString + "\t", writer);
+				element.writeYourselfToFile(tabString + "  ", writer);
 			}
 		}
 	}

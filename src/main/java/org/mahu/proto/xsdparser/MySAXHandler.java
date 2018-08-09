@@ -14,14 +14,14 @@ public class MySAXHandler implements ContentHandler {
 
 	private final XSDFile file;
 	private final Stack<Element> inProgress;
-	private boolean uniqueNotStarted;
+	private boolean uniqueOrAnnotationNotStarted;
 	private boolean uselessAttributeNotStarted;
 	private boolean simpleTypeNotStarted;
 
 	public MySAXHandler(XSDFile file) {
 		this.file = file;
 		inProgress = new Stack<>();
-		uniqueNotStarted = true;
+		uniqueOrAnnotationNotStarted = true;
 		uselessAttributeNotStarted = true;
 		simpleTypeNotStarted = true;
 	}
@@ -54,7 +54,7 @@ public class MySAXHandler implements ContentHandler {
 	@Override
 	public void startElement(String namespaceURI, String localName, String qualifiedName, Attributes attrs)
 			throws SAXException {
-		if (uniqueNotStarted && uselessAttributeNotStarted && simpleTypeNotStarted) {
+		if (uniqueOrAnnotationNotStarted && uselessAttributeNotStarted && simpleTypeNotStarted) {
 
 			Element element = determineElementType(localName, attrs);
 
@@ -65,7 +65,10 @@ public class MySAXHandler implements ContentHandler {
 				file.addInclude(include);
 			} else if (localName.toLowerCase().equals("unique")) {
 				System.out.println("ignoring unique " + attrs.getValue("name") + " in file " + file.getLocation());
-				uniqueNotStarted = false;
+				uniqueOrAnnotationNotStarted = false;
+			} else if (localName.toLowerCase().equals("annotation")) {
+				System.out.println("ignoring annotation " + " in file " + file.getLocation());
+				uniqueOrAnnotationNotStarted = false;
 			} else if (!localName.toLowerCase().equals("schema") && !localName.toLowerCase().equals("enumeration")
 					&& uselessAttributeNotStarted) {
 				System.out.println("Unprocessed element!!!!!!!!!!! MySAXHandler: Starting element=" + localName
@@ -129,8 +132,9 @@ public class MySAXHandler implements ContentHandler {
 
 	@Override
 	public void endElement(String namespaceURI, String localName, String qualifiedName) throws SAXException {
-		if (uniqueNotStarted && uselessAttributeNotStarted) {
-			String lcLocalName = localName.toLowerCase();
+		String lcLocalName = localName.toLowerCase();
+		if (uniqueOrAnnotationNotStarted && uselessAttributeNotStarted) {
+
 			if (lcLocalName.equals("element") || lcLocalName.equals("sequence") || lcLocalName.equals("complextype")
 					|| lcLocalName.equals("simpletype") || lcLocalName.equals("choice")
 					|| lcLocalName.equals("complexcontent") || lcLocalName.equals("simplecontent")
@@ -138,13 +142,13 @@ public class MySAXHandler implements ContentHandler {
 					|| lcLocalName.equals("attribute")) {
 				inProgress.pop();
 			}
-			if (localName.toLowerCase().equals("simpletype")) {
+			if (lcLocalName.equals("simpletype")) {
 				simpleTypeNotStarted = true;
 			}
 
-		} else if (localName.toLowerCase().equals("unique")) {
-			uniqueNotStarted = true;
-		} else if (localName.toLowerCase().equals("attribute")) {
+		} else if (lcLocalName.equals("unique") || lcLocalName.equals("annotation")) {
+			uniqueOrAnnotationNotStarted = true;
+		} else if (lcLocalName.equals("attribute")) {
 			uselessAttributeNotStarted = true;
 		}
 	}

@@ -130,6 +130,8 @@ public class MySAXHandler implements ContentHandler {
 			return new Element(Element.elementType.EXTENSION);
 		case "group":
 			return new Element(Element.elementType.GROUP);
+		case "all":
+			return new Element(Element.elementType.ALL);
 		case "attribute":
 			if (attrs.getValue("type") != null) {
 				return new Element(Element.elementType.ATTRIBUTE);
@@ -150,8 +152,8 @@ public class MySAXHandler implements ContentHandler {
 			if (lcLocalName.equals("element") || lcLocalName.equals("sequence") || lcLocalName.equals("complextype")
 					|| lcLocalName.equals("simpletype") || lcLocalName.equals("choice")
 					|| lcLocalName.equals("complexcontent") || lcLocalName.equals("simplecontent")
-					|| lcLocalName.equals("extension") || lcLocalName.equals("group")
-					|| lcLocalName.equals("attribute")) {
+					|| lcLocalName.equals("extension") || lcLocalName.equals("group") || lcLocalName.equals("attribute")
+					|| lcLocalName.equals("all")) {
 				inProgress.pop();
 			}
 			if (lcLocalName.equals("simpletype")) {

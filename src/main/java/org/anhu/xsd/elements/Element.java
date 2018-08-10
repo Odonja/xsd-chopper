@@ -87,7 +87,11 @@ public class Element {
 	}
 
 	public void appendAllElements(String fileName, StringBuilder str) {
-		str.append(etype + " " + name + " in file " + fileName + "\n");
+		if (name != null) {
+			str.append(etype + " " + name + " in file " + fileName + "\n");
+		} else {
+			str.append(etype + " NONAME in file " + fileName + "\n");
+		}
 		if (elements != null) {
 			for (Element element : elements) {
 				element.appendAllElements(fileName, str);

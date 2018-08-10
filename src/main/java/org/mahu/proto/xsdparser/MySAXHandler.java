@@ -70,10 +70,10 @@ public class MySAXHandler implements ContentHandler {
 
 		if (unprocessed) {
 			if (lclocname.equals("unique")) {
-				System.out.println("ignoring unique " + attrs.getValue("name") + " in file " + file.getLocation());
+				System.out.println("   ignoring unique " + attrs.getValue("name"));
 				nrOfUnwantedsStarted++;
 			} else if (lclocname.equals("annotation")) {
-				System.out.println("ignoring annotation " + " in file " + file.getLocation());
+				System.out.println("   ignoring typeless annotation");
 				nrOfUnwantedsStarted++;
 			} else if (lclocname.equals("simpletype")) {
 				nrOfSimpleTypesStarted++;

@@ -213,19 +213,6 @@ public class Informant {
 		return isUsed;
 	}
 
-	private boolean isUsedExactlyOnce(XSDFile xsdFile, Element type) {
-		int nrOfUses = 0;
-		for (XSDFile xsd : xsdFiles) {
-			if (xsd.usesType(type.getName())) {
-				nrOfUses++;
-				if (nrOfUses > 1) {
-					break;
-				}
-			}
-		}
-		return nrOfUses == 1;
-	}
-
 	public String reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce() {
 
 		StringBuilder str = new StringBuilder();

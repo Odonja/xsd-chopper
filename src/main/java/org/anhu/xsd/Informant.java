@@ -75,21 +75,34 @@ public class Informant {
 				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
 		str.append("The following files are not present in the include of any file:\n");
 		for (XSDFile xsdFile : xsdFiles) {
-			boolean notIncluded = true;
-			for (XSDFile xsd : xsdFiles) {
-				String name = xsdFile.getName();
-				if (xsd.isListedInInclude(name)) {
-					notIncluded = false;
-					break;
-				}
-			}
-			if (notIncluded && xsdFile.hasNoElement()) {
+			if (!isIncluded(xsdFile) && xsdFile.hasNoElement()) {
 				str.append(xsdFile.getLocation() + "\n");
 			}
 		}
 		str.append(
 				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 		return str.toString();
+	}
+
+	private boolean isIncluded(XSDFile xsdFile) {
+		for (XSDFile xsd : xsdFiles) {
+			String name = xsdFile.getName();
+			if (xsd.isListedInInclude(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private List<XSDFile> findWhereIncluded(XSDFile xsdFile) {
+		List<XSDFile> here = new ArrayList<>();
+		for (XSDFile xsd : xsdFiles) {
+			String name = xsdFile.getName();
+			if (xsd.isListedInInclude(name)) {
+				here.add(xsd);
+			}
+		}
+		return here;
 	}
 
 	public String reportDoubleFiles() {
@@ -198,6 +211,53 @@ public class Informant {
 			}
 		}
 		return isUsed;
+	}
+
+	private boolean isUsedExactlyOnce(XSDFile xsdFile, Element type) {
+		int nrOfUses = 0;
+		for (XSDFile xsd : xsdFiles) {
+			if (xsd.usesType(type.getName())) {
+				nrOfUses++;
+				if (nrOfUses > 1) {
+					break;
+				}
+			}
+		}
+		return nrOfUses == 1;
+	}
+
+	public String reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce() {
+
+		StringBuilder str = new StringBuilder();
+		str.append(
+				"--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
+		str.append("The following types are used exactly once:\n");
+		for (XSDFile xsdFile : xsdFiles) {
+			List<XSDFile> isincluded = findWhereIncluded(xsdFile);
+			List<Element> types = xsdFile.getSimpleAndComplexTypes();
+			for (Element type : types) {
+				int nrOfUses = 0;
+				XSDFile f = null;
+				if (type.getName() != null) {
+					for (XSDFile isincl : isincluded) {
+						if (isincl.usesType(type.getName())) {
+							f = isincl;
+							nrOfUses++;
+						}
+					}
+				}
+
+				if (nrOfUses == 1) {
+					str.append(type.getElementtype() + " " + type.getName() + "\n in file: " + xsdFile.getLocation()
+							+ "\n is only used in " + f.getLocation() + "\n");
+				}
+
+			}
+		}
+		str.append(
+				"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+		return str.toString();
+
 	}
 
 	public void reportAndPrintAllFilesWithTopLevelElement(String directory, String fileName) {

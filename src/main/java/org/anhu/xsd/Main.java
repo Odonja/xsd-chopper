@@ -20,15 +20,16 @@ public class Main {
 		// final String file = "d.xsd";
 		// Informant sherlock = new Informant(dir, file);
 
-//		System.out.println(sherlock.reportUnIncludedFiles());
-//		System.out.println(sherlock.reportDoubleFiles());
-//		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
-//		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
-//		System.out.println(sherlock.reportAllElementsWithFile());
-//
-//		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
-//		final String file = "FilesWithATopLevelElement.txt";
-//		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
+		System.out.println(sherlock.reportUnIncludedFiles());
+		System.out.println(sherlock.reportDoubleFiles());
+		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
+		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
+		System.out.println(sherlock.reportAllElementsWithFile());
+		System.out.println(sherlock.reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce());
+
+		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String file = "FilesWithATopLevelElement.txt";
+		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
 
 		final String fileName = "BloSchema.xsd";
 		sherlock.reportSingleXSDToFile(fileName);

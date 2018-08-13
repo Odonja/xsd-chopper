@@ -27,14 +27,14 @@ public class Informant {
 		chopFiles(files);
 	}
 
-	public Informant(String dir, String thefile) {
-		xsdFiles = new ArrayList<>();
-		List<Path> files = readFilesFromFile(dir, thefile);
-		chopFiles(files);
+	public void reportTheseFiles(String directory, String thefile) {
+		List<String> files = readFileNamesFromFile(directory, thefile);
+		InformantSlave mySlave = new InformantSlave(xsdFiles);
+		mySlave.reportAll(files);
 	}
 
-	private List<Path> readFilesFromFile(String dir, String thefile) {
-		List<Path> files = new ArrayList<>();
+	private List<String> readFileNamesFromFile(String dir, String thefile) {
+		List<String> files = new ArrayList<>();
 		String fileLocation = dir + "\\" + thefile;
 		File file = new File(fileLocation);
 
@@ -42,12 +42,14 @@ public class Informant {
 		try {
 			br = new BufferedReader(new FileReader(file));
 			while ((fileLocation = br.readLine()) != null) {
-				files.add(Paths.get(dir + "\\" + fileLocation));
+				String filename = Paths.get(dir + "\\" + fileLocation).getFileName().toString();
+				System.out.println("readFileNamesFromFile : found " + filename);
+				files.add(filename);
 			}
 			br.close();
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Informant constructor, file: " + fileLocation + " was not found.");
+			System.out.println("readFileNamesFromFile, file: " + fileLocation + " was not found.");
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -273,9 +275,6 @@ public class Informant {
 	}
 
 	public void reportSingleXSDToFile(String fileName) {
-		if (fileNameToObject(fileName) == null) {
-			throw new IllegalArgumentException("reportSingleXSDToFile: file not in memory " + fileName);
-		}
 		String dir = "";
 		try {
 			dir = TestApp.getTargetDirectory(Informant.class);
@@ -288,13 +287,21 @@ public class Informant {
 		try {
 			writer = new PrintWriter(file);
 			writer.println("---start---");
-			writeFileWithIncludesToFile(fileName, writer);
+			reportSingleXSDToFile(fileName, writer);
 			writer.println("---end---");
 			writer.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
 
+	private void reportSingleXSDToFile(String fileName, PrintWriter writer) {
+		if (fileNameToObject(fileName) == null) {
+			throw new IllegalArgumentException("reportSingleXSDToFile: file not in memory " + fileName);
+		}
+		writer.println("------------------------------------------");
+		writeFileWithIncludesToFile(fileName, writer);
+		writer.println("------------------------------------------");
 	}
 
 	private void writeFileWithIncludesToFile(String fileName, PrintWriter writer) {
@@ -318,7 +325,6 @@ public class Informant {
 				}
 			}
 		}
-
 	}
 
 	private void writeSingleFile(XSDFile xsd, PrintWriter writer) {

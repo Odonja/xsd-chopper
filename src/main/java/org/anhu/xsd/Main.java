@@ -15,24 +15,26 @@ public class Main {
 		final String dir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example";
 		Informant sherlock = new Informant(dir);
 
-		// of
-		// final String dir = "C:\\a\\b\\c";
-		// final String file = "d.xsd";
-		// Informant sherlock = new Informant(dir, file);
+//		System.out.println(sherlock.reportUnIncludedFiles());
+//		System.out.println(sherlock.reportDoubleFiles());
+//		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
+//		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
+//		System.out.println(sherlock.reportAllElementsWithFile());
+//		System.out.println(sherlock.reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce());
+//
+//		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+//		final String file = "FilesWithATopLevelElement.txt";
+//		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
 
-		System.out.println(sherlock.reportUnIncludedFiles());
-		System.out.println(sherlock.reportDoubleFiles());
-		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
-		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
-		System.out.println(sherlock.reportAllElementsWithFile());
-		System.out.println(sherlock.reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce());
+//		final String fileName = "BloSchema.xsd";
+//		sherlock.reportSingleXSDToFile(fileName);
 
-		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
-		final String file = "FilesWithATopLevelElement.txt";
-		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
-
-		final String fileName = "BloSchema.xsd";
-		sherlock.reportSingleXSDToFile(fileName);
+		// output file can be found in target -> FileReport.txt
+		// specify in dirdir2 the directory of the file containing the files
+		// specify in file2 the filename of the file containing the files
+		final String dirdir2 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String file2 = "filesToReport.txt";
+		sherlock.reportTheseFiles(dirdir2, file2);
 
 	}
 

@@ -37,6 +37,16 @@ public class Informant {
 		mySlave.reportAll(files);
 	}
 
+	public void reportTheseFilesOriginal(String directory, String thefile) {
+		List<String> files = readFileNamesFromFile(directory, thefile);
+		reportTheseFilesOriginal(files);
+	}
+
+	public void reportTheseFilesOriginal(List<String> files) {
+		InformantSlave mySlave = new InformantSlave(xsdFiles);
+		mySlave.reportAllOriginal(files);
+	}
+
 	private List<String> readFileNamesFromFile(String dir, String thefile) {
 		List<String> files = new ArrayList<>();
 		String fileLocation = dir + "\\" + thefile;
@@ -297,6 +307,11 @@ public class Informant {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void reportSingleXSDOriginalToFile(String fileName) {
+		InformantSlave mySlave = new InformantSlave(xsdFiles);
+		mySlave.reportOriginal(fileName);
 	}
 
 	private void reportSingleXSDToFile(String fileName, PrintWriter writer) {

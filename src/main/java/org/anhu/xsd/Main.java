@@ -29,17 +29,38 @@ public class Main {
 		// final String file = "FilesWithATopLevelElement.txt";
 		// sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
 
-		// fill in the name of the xsd you want the inhoud off, report will apear in
-		// target folder and is called singleFileReport.txt
-		final String fileName = "BloSchema.xsd";
+		/*
+		 * fill in the name of the xsd you want the inhoud off, report will apear in
+		 * target folder and is called singleFileReport.txt
+		 */
+		final String fileName = "BotSizeSchema.xsd";
 		sherlock.reportSingleXSDToFile(fileName);
 
-		// output file can be found in target -> FileReport.txt
-		// specify in dirdir2 the directory of the file containing the files
-		// specify in file2 the filename of the file containing the files
+		/*
+		 * fill in the name of the xsd you want the original inhoud off, report will
+		 * appear in target folder and is called OriginalFileReport.txt final
+		 */
+		String fileName2 = "BotSizeSchema.xsd";
+		sherlock.reportSingleXSDOriginalToFile(fileName2);
+
+		/*
+		 * output file can be found in target -> FileReport.txt specify in dirdir2 the
+		 * directory of the file containing the files specify in file2 the filename of
+		 * the file containing the files
+		 */
 		final String dirdir2 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+
 		final String file2 = "filesToReport.txt";
 		sherlock.reportTheseFiles(dirdir2, file2);
+
+		/*
+		 * output file can be found in target -> FileReport.txt specify in dirdir2 the
+		 * directory of the file containing the files specify in file2 the filename of
+		 * the file containing the files
+		 */
+		final String dirdir3 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String file3 = "filesToReport.txt";
+		sherlock.reportTheseFilesOriginal(dirdir3, file3);
 
 	}
 

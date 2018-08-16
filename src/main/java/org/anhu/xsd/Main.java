@@ -10,9 +10,9 @@ public class Main {
 
 	public static void main(String args[]) throws ParserConfigurationException, SAXException, IOException,
 			ClassNotFoundException, InstantiationException, IllegalAccessException, ClassCastException {
-		final String dir = "C:\\Users\\310160231\\Documents\\dps-css\\trunk\\software\\shared\\xsd";
 		// final String dir =
-		// "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
+		// "C:\\Users\\310160231\\Documents\\dps-css\\trunk\\software\\shared\\xsd";
+		final String dir = "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
 		// final String dir =
 		// "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example";
 		Informant sherlock = new Informant(dir);
@@ -48,7 +48,7 @@ public class Main {
 		 * directory of the file containing the files specify in file2 the filename of
 		 * the file containing the files
 		 */
-		final String dirdir2 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String dirdir2 = "C:\\Users\\s167710\\git\\xsd-chopper\\target";
 
 		final String file2 = "filesToReport.txt";
 		sherlock.reportTheseFiles(dirdir2, file2);
@@ -58,7 +58,7 @@ public class Main {
 		 * directory of the file containing the files specify in file2 the filename of
 		 * the file containing the files
 		 */
-		final String dirdir3 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String dirdir3 = "C:\\Users\\s167710\\git\\xsd-chopper\\target";
 		final String file3 = "filesToReport.txt";
 		sherlock.reportTheseFilesOriginal(dirdir3, file3);
 

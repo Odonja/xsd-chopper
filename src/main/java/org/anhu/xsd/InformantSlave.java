@@ -7,7 +7,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.anhu.xsd.elements.XSDFile;
@@ -83,7 +86,8 @@ public class InformantSlave {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		String outputFile = dir + "\\OriginalFileReport.txt";
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmm");
+		String outputFile = dir + "\\OriginalFileReport" + dateFormat.format(new Date()) + ".txt";
 		File file = new File(outputFile);
 		PrintWriter writer;
 		try {
@@ -104,7 +108,9 @@ public class InformantSlave {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-		String outputFile = dir + "\\FileReport.txt";
+		DateFormat dateFormat = new SimpleDateFormat("yyMMdd-HHmm");
+
+		String outputFile = dir + "\\FileReport" + dateFormat.format(new Date()) + ".txt";
 		File file = new File(outputFile);
 		PrintWriter writer;
 		try {
@@ -156,6 +162,8 @@ public class InformantSlave {
 			writer.println(file + " is not present in informant memory -> skipping");
 		} else {
 			writer.println("---------------------------------------");
+			writer.println(xsdFile.getName());
+			writer.println("");
 			String location = xsdFile.getLocation();
 			File openfile = new File(location);
 			BufferedReader br;
@@ -166,6 +174,7 @@ public class InformantSlave {
 					writer.println(line);
 				}
 				br.close();
+				writer.println("");
 			} catch (FileNotFoundException e) {
 				System.out.println("readFileNamesFromFile, file: " + location + " was not found.");
 				e.printStackTrace();

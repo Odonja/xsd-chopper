@@ -29,6 +29,10 @@ public class Informant {
 
 	public void reportTheseFiles(String directory, String thefile) {
 		List<String> files = readFileNamesFromFile(directory, thefile);
+		reportTheseFiles(files);
+	}
+
+	public void reportTheseFiles(List<String> files) {
 		InformantSlave mySlave = new InformantSlave(xsdFiles);
 		mySlave.reportAll(files);
 	}

@@ -12,6 +12,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.anhu.slaves.AbstractInformantSlave;
+import org.anhu.slaves.ElementTxtInformantSlave;
+import org.anhu.slaves.OriginalTxtInformantSlave;
+import org.anhu.slaves.OriginalWordInformantSlave;
 import org.anhu.xsd.chopFiles.Chopper;
 import org.anhu.xsd.chopFiles.RetrieveFiles;
 import org.anhu.xsd.elements.Element;
@@ -33,7 +37,7 @@ public class Informant {
 	}
 
 	public void reportTheseFiles(List<String> files) {
-		InformantSlave mySlave = new InformantSlave(xsdFiles);
+		AbstractInformantSlave mySlave = new ElementTxtInformantSlave(xsdFiles);
 		mySlave.reportAll(files);
 	}
 
@@ -43,8 +47,18 @@ public class Informant {
 	}
 
 	public void reportTheseFilesOriginal(List<String> files) {
-		InformantSlave mySlave = new InformantSlave(xsdFiles);
-		mySlave.reportAllOriginal(files);
+		AbstractInformantSlave mySlave = new OriginalTxtInformantSlave(xsdFiles);
+		mySlave.reportAll(files);
+	}
+
+	public void reportTheseFilesOriginalToWord(String directory, String thefile) {
+		List<String> files = readFileNamesFromFile(directory, thefile);
+		reportTheseFilesOriginalToWord(files);
+	}
+
+	public void reportTheseFilesOriginalToWord(List<String> files) {
+		AbstractInformantSlave mySlave = new OriginalWordInformantSlave(xsdFiles);
+		mySlave.reportAll(files);
 	}
 
 	private List<String> readFileNamesFromFile(String dir, String thefile) {
@@ -309,9 +323,14 @@ public class Informant {
 		}
 	}
 
-	public void reportSingleXSDOriginalToFile(String fileName) {
-		InformantSlave mySlave = new InformantSlave(xsdFiles);
-		mySlave.reportOriginal(fileName);
+	public void reportSingleXSDOriginalToTxtFile(String fileName) {
+		AbstractInformantSlave mySlave = new OriginalTxtInformantSlave(xsdFiles);
+		mySlave.report(fileName);
+	}
+
+	public void reportSingleXSDOriginalToWordFile(String fileName) {
+		AbstractInformantSlave mySlave = new OriginalWordInformantSlave(xsdFiles);
+		mySlave.report(fileName);
 	}
 
 	private void reportSingleXSDToFile(String fileName, PrintWriter writer) {

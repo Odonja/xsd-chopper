@@ -41,7 +41,8 @@ public class Main {
 		 * appear in target folder and is called OriginalFileReport.txt final
 		 */
 		String fileName2 = "BotSizeSchema.xsd";
-		sherlock.reportSingleXSDOriginalToFile(fileName2);
+		sherlock.reportSingleXSDOriginalToTxtFile(fileName2);
+		sherlock.reportSingleXSDOriginalToWordFile(fileName2);
 
 		/*
 		 * output file can be found in target -> FileReport.txt specify in dirdir2 the
@@ -61,6 +62,7 @@ public class Main {
 		final String dirdir3 = "C:\\Users\\s167710\\git\\xsd-chopper\\target";
 		final String file3 = "filesToReport.txt";
 		sherlock.reportTheseFilesOriginal(dirdir3, file3);
+		sherlock.reportTheseFilesOriginalToWord(dirdir3, file3);
 
 	}
 

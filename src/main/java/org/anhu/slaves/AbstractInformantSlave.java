@@ -15,11 +15,13 @@ public abstract class AbstractInformantSlave {
 	private final List<XSDFile> xsdFiles;
 	private final List<String> fileNames;
 	private List<String> includes;
+	private List<String> unfoundIncludes;
 
 	public AbstractInformantSlave(final List<XSDFile> xsdFiles) {
 		this.xsdFiles = xsdFiles;
 		this.fileNames = new ArrayList<>();
 		includes = new ArrayList<>();
+		unfoundIncludes = new ArrayList<>();
 	}
 
 	public final void report(String fileName) {
@@ -102,16 +104,19 @@ public abstract class AbstractInformantSlave {
 		for (String currentFile : includes) {
 			writeSingleFile(currentFile, writer);
 		}
+		System.out.println(
+				"------not found included XSD's---------------------------------------------------------------------------------------------------------------------------");
+		writer.println(
+				"------not found included XSD's---------------------------------------------------------------------------------------------------------------------------");
+		for (String currentFile : unfoundIncludes) {
+			printUnfoundInclude(currentFile, writer);
+		}
 	}
 
 	private final void writeSingleFile(String file, PrintWriter writer) {
 		XSDFile xsdFile = fileNameToObject(file);
 		if (xsdFile == null) {
-			System.out.println(file + " is not present in informant memory -> skipping");
-			writer.println(file + " is not present in informant memory -> skipping");
-			String whereIncl = findWhereIncluded(file);
-			System.out.println(whereIncl);
-			writer.print(whereIncl);
+			unfoundIncludes.add(file);
 		} else {
 			writer.println("---------------------------------------");
 			writer.println(xsdFile.getName());
@@ -122,14 +127,18 @@ public abstract class AbstractInformantSlave {
 		}
 	}
 
-	private String findWhereIncluded(String file) {
-		StringBuilder sb = new StringBuilder("Is included in files: ");
+	private final void printUnfoundInclude(String file, PrintWriter writer) {
+		System.out.println(file + " is not present in informant memory -> skipped");
+		writer.println(file + " is not present in informant memory -> skipped");
+		System.out.println("It is included in files: ");
+		writer.println("It is included in files: ");
 		for (XSDFile xsdFile : xsdFiles) {
 			if (xsdFile.isListedInInclude(file)) {
-				sb.append(xsdFile.getLocation() + "   ");
+				System.out.println(xsdFile.getLocation());
+				writer.println(xsdFile.getLocation());
 			}
 		}
-		return sb.toString();
+
 	}
 
 	protected void doFileWriting(XSDFile xsdFile, PrintWriter writer) {

@@ -132,11 +132,9 @@ public abstract class AbstractInformantSlave {
 		writer.println(file + " is not present in informant memory -> skipped");
 		System.out.println("It is included in files: ");
 		writer.println("It is included in files: ");
-		for (XSDFile xsdFile : xsdFiles) {
-			if (xsdFile.isListedInInclude(file)) {
-				System.out.println(xsdFile.getLocation());
-				writer.println(xsdFile.getLocation());
-			}
+		for (String s : findWhereIncluded(file)) {
+			System.out.println(s);
+			writer.println(s);
 		}
 
 	}
@@ -159,6 +157,16 @@ public abstract class AbstractInformantSlave {
 
 	protected List<String> getFileNames() {
 		return fileNames;
+	}
+
+	protected List<String> findWhereIncluded(String file) {
+		List<String> whereIncluded = new ArrayList<>();
+		for (XSDFile xsdFile : xsdFiles) {
+			if (xsdFile.isListedInInclude(file)) {
+				whereIncluded.add(xsdFile.getLocation());
+			}
+		}
+		return whereIncluded;
 	}
 
 }

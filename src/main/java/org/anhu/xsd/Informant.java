@@ -50,6 +50,17 @@ public class Informant {
 		reportTheseFilesOriginal(files);
 	}
 
+	public void reportTopAndCommonToWord() {
+		List<String> files = new ArrayList<>();
+		for (XSDFile xsdFile : xsdFiles) {
+			if (!isIncluded(xsdFile)) {
+				files.add(xsdFile.getName());
+				System.out.println("adding not included file:" + xsdFile.getName());
+			}
+		}
+		reportTheseFilesOriginalToWord(files);
+	}
+
 	public void reportTheseFiles(String directory, String thefile) {
 		List<String> files = readFileNamesFromFile(directory, thefile);
 		reportTheseFiles(files);

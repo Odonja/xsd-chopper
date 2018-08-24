@@ -27,12 +27,11 @@ public class Main {
 		System.out.println(
 				"---------------------------------------------------------------------------------------------------------------------------bones \\o/--------------------------------------");
 		final String[] dirs = {
-				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder2",
-				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder3",
+
 				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder4" };
 		Informant bones = new Informant(dirs);
 		bones.reportTopAndCommon();
-
+		bones.reportTopAndCommonToWord();
 	}
 
 	private static void sherlockTxtAndWordReports(Informant sherlock) {

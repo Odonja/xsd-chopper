@@ -175,6 +175,7 @@ public class InformantSlaveDocument {
 			XWPFParagraph paragraph = document.createParagraph();
 			paragraph.setStyle(H2);
 			XWPFRun run1 = paragraph.createRun();
+			System.out.println(fileName);
 //		run1.setBold(true);
 //		run1.setFontFamily("Arial");
 //		run1.setFontSize(12);
@@ -219,11 +220,26 @@ public class InformantSlaveDocument {
 //		run.addCarriageReturn();
 	}
 
+	public void startNewChapter(String chapterName) {
+		XWPFParagraph paragraph = document.createParagraph();
+		paragraph.setStyle(H1);
+
+		XWPFRun run = paragraph.createRun();
+//		run.setBold(true);
+//		run.setFontFamily("Arial");
+//		run.setFontSize(12);
+//		run.addCarriageReturn();
+//		run.setText("2");
+//		run.addTab();
+		run.setText(chapterName);
+	}
+
 	public void addCommonXSD(BufferedReader br, String fileName) {
 		{
 			XWPFParagraph paragraph = document.createParagraph();
 			paragraph.setStyle(H2);
 			XWPFRun run1 = paragraph.createRun();
+			System.out.println(fileName);
 //		run1.setBold(true);
 //		run1.setFontFamily("Arial");
 //		run1.setFontSize(12);
@@ -253,24 +269,34 @@ public class InformantSlaveDocument {
 		}
 	}
 
-	public void addFileCannotBeFoundLine(String fileName) {
+	public void addFileCannotBeFoundLine(String fileName, List<String> whereIncluded) {
 		XWPFParagraph paragraph = document.createParagraph();
+		paragraph.setStyle(H2);
 		XWPFRun run1 = paragraph.createRun();
-		run1.setBold(true);
-		run1.setFontFamily("Arial");
-		run1.setFontSize(12);
-		run1.addCarriageReturn();
-		run1.setText("2." + commonCounter);
-		commonCounter++;
-		run1.addTab();
+//		run1.setBold(true);
+//		run1.setFontFamily("Arial");
+//		run1.setFontSize(12);
+//		run1.addCarriageReturn();
+//		run1.setText("2." + commonCounter);
+//		commonCounter++;
+//		run1.addTab();
 		run1.setText(fileName);
 		run1.addCarriageReturn();
-
+		System.out.println(fileName + " was not found. \n it was included in: ");
 		XWPFRun run2 = paragraph.createRun();
 		run2.setFontFamily("Arial");
 		run2.setFontSize(10);
 		run2.setText("File was not found in program memory");
 		run2.addCarriageReturn();
+		if (whereIncluded != null && whereIncluded.size() > 0) {
+			run2.setText("It was included in:");
+			run2.addCarriageReturn();
+			for (String s : whereIncluded) {
+				System.out.println(s);
+				run2.setText(s);
+				run2.addCarriageReturn();
+			}
+		}
 	}
 
 	public static String getWordTemplateAsString() throws IOException {

@@ -31,6 +31,25 @@ public class Informant {
 		chopFiles(files);
 	}
 
+	public Informant(String[] dirs) {
+		xsdFiles = new ArrayList<>();
+		for (String dir : dirs) {
+			List<Path> files = RetrieveFiles.findXSDFiles(dir);
+			chopFiles(files);
+		}
+	}
+
+	public void reportTopAndCommon() {
+		List<String> files = new ArrayList<>();
+		for (XSDFile xsdFile : xsdFiles) {
+			if (!isIncluded(xsdFile)) {
+				files.add(xsdFile.getName());
+				System.out.println("adding not included file:" + xsdFile.getName());
+			}
+		}
+		reportTheseFilesOriginal(files);
+	}
+
 	public void reportTheseFiles(String directory, String thefile) {
 		List<String> files = readFileNamesFromFile(directory, thefile);
 		reportTheseFiles(files);

@@ -11,6 +11,7 @@ import java.util.List;
 import org.anhu.word.InformantSlaveDocument;
 import org.anhu.xsd.TestApp;
 import org.anhu.xsd.elements.XSDFile;
+import org.apache.xmlbeans.XmlException;
 
 public class OriginalWordInformantSlave extends AbstractInformantSlave {
 
@@ -30,20 +31,20 @@ public class OriginalWordInformantSlave extends AbstractInformantSlave {
 			InformantSlaveDocument doc = new InformantSlaveDocument(dir);
 			reportFiles(doc);
 			doc.done();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (XmlException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void reportFiles(InformantSlaveDocument doc) {
+		doc.requestedXSDsStart();
 		for (String currentFile : getFileNames()) {
-			doc.requestedXSDsStart();
 			writeRequestedFile(currentFile, doc);
 		}
+		doc.commonXSDsStart();
 		for (String currentFile : getIncludes()) {
-			doc.commonXSDsStart();
 			writeIncludedFile(currentFile, doc);
 		}
 	}

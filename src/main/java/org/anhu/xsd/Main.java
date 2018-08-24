@@ -12,22 +12,33 @@ public class Main {
 			ClassNotFoundException, InstantiationException, IllegalAccessException, ClassCastException {
 		// final String dir =
 		// "C:\\Users\\310160231\\Documents\\dps-css\\trunk\\software\\shared\\xsd";
-		final String dir = "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
-		// final String dir =
-		// "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example";
+//		final String dir = "C:\\Users\\s167710\\git\\xsd-chopper\\target\\xsd_example";
+		final String dir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example";
 		Informant sherlock = new Informant(dir);
 
-		// System.out.println(sherlock.reportUnIncludedFiles());
-		// System.out.println(sherlock.reportDoubleFiles());
-		// System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
-		// System.out.println(sherlock.reportFilesWithIdenticalInhoud());
-		// System.out.println(sherlock.reportAllElementsWithFile());
-		// System.out.println(sherlock.reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce());
-		//
-		// final String dirdir =
-		// "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
-		// final String file = "FilesWithATopLevelElement.txt";
-		// sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
+//		 simplePrintlnReports(sherlock);
+
+//		 sherlockTxtAndWordReports(sherlock);
+
+		/*
+		 * Fill in the directories of the xsd's you want reported, output file ->
+		 * OriginalFileReport180824-time.txt
+		 */
+		System.out.println(
+				"---------------------------------------------------------------------------------------------------------------------------bones \\o/--------------------------------------");
+		final String[] dirs = {
+				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder2",
+				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder3",
+				"C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target\\xsd_example\\folder4" };
+		Informant bones = new Informant(dirs);
+		bones.reportTopAndCommon();
+
+	}
+
+	private static void sherlockTxtAndWordReports(Informant sherlock) {
+		final String dirdir = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
+		final String file = "FilesWithATopLevelElement.txt";
+		sherlock.reportAndPrintAllFilesWithTopLevelElement(dirdir, file);
 
 		/*
 		 * fill in the name of the xsd you want the inhoud off, report will apear in
@@ -49,7 +60,7 @@ public class Main {
 		 * directory of the file containing the files specify in file2 the filename of
 		 * the file containing the files
 		 */
-		final String dirdir2 = "C:\\Users\\s167710\\git\\xsd-chopper\\target";
+		final String dirdir2 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
 
 		final String file2 = "filesToReport.txt";
 		sherlock.reportTheseFiles(dirdir2, file2);
@@ -59,11 +70,19 @@ public class Main {
 		 * directory of the file containing the files specify in file2 the filename of
 		 * the file containing the files
 		 */
-		final String dirdir3 = "C:\\Users\\s167710\\git\\xsd-chopper\\target";
+		final String dirdir3 = "C:\\Users\\anneke.huijsmans\\eclipse-workspace\\xsd-chopper\\target";
 		final String file3 = "filesToReport.txt";
 		sherlock.reportTheseFilesOriginal(dirdir3, file3);
 		sherlock.reportTheseFilesOriginalToWord(dirdir3, file3);
+	}
 
+	private static void simplePrintlnReports(Informant sherlock) {
+		System.out.println(sherlock.reportUnIncludedFiles());
+		System.out.println(sherlock.reportDoubleFiles());
+		System.out.println(sherlock.reportUnusedSimpleAndComplexTypes());
+		System.out.println(sherlock.reportFilesWithIdenticalInhoud());
+		System.out.println(sherlock.reportAllElementsWithFile());
+		System.out.println(sherlock.reportAllDataTypesFromIncludedXSDThatAreUsedExactlyOnce());
 	}
 
 }

@@ -44,6 +44,7 @@ public abstract class AbstractInformantSlave {
 			findIncludes(file);
 			current++;
 		}
+		fileNames.sort(String.CASE_INSENSITIVE_ORDER);
 		includes.sort(String.CASE_INSENSITIVE_ORDER);
 	}
 
@@ -87,9 +88,17 @@ public abstract class AbstractInformantSlave {
 	protected abstract String getOutputFileName();
 
 	private final void reportFiles(PrintWriter writer) {
+		System.out.println(
+				"------top-level XSD's---------------------------------------------------------------------------------------------------------------------------");
+		writer.println(
+				"------top-level XSD's---------------------------------------------------------------------------------------------------------------------------");
 		for (String currentFile : fileNames) {
 			writeSingleFile(currentFile, writer);
 		}
+		System.out.println(
+				"------common XSD's---------------------------------------------------------------------------------------------------------------------------");
+		writer.println(
+				"------common XSD's---------------------------------------------------------------------------------------------------------------------------");
 		for (String currentFile : includes) {
 			writeSingleFile(currentFile, writer);
 		}
@@ -98,10 +107,12 @@ public abstract class AbstractInformantSlave {
 	private final void writeSingleFile(String file, PrintWriter writer) {
 		XSDFile xsdFile = fileNameToObject(file);
 		if (xsdFile == null) {
+			System.out.println(file + " is not present in informant memory -> skipping");
 			writer.println(file + " is not present in informant memory -> skipping");
 		} else {
 			writer.println("---------------------------------------");
 			writer.println(xsdFile.getName());
+			System.out.println(xsdFile.getName());
 			writer.println("");
 			doFileWriting(xsdFile, writer);
 			writer.println("");
